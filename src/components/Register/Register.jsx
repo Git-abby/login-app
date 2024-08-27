@@ -3,24 +3,31 @@ import { Link } from "react-router-dom";
 import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
 
 function Register() {
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
- const [isRegistering, setIsRegistering] = useState(false);
- const [errorMessage, setErrorMessage] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   // console.log(name, email, password)
 
-  const onSubmit = async (e) =>{
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if(!isRegistering){
+    if (!isRegistering) {
       setIsRegistering(true);
-      await doCreateUserWithEmailAndPassword(email, password);
+      try {
+        await doCreateUserWithEmailAndPassword(email, password);
+      } catch (error) {
+        console.log(error.message);
+        setErrorMessage(error.message);
+      }
       // console.log(res);
     }
-  }
+  };
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+      {errorMessage && (
+        <div className="mb-4 text-red-600 text-sm">{errorMessage}</div>
+      )}
       <h2 className="text-2xl font-bold text-gray-700 mb-6">Register</h2>
       <form className="bg-white p-6 rounded shadow-md w-full max-w-sm">
         <div className="mb-4">

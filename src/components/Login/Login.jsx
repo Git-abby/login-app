@@ -8,7 +8,7 @@ import {
 import { useAuth } from "../../contexts/authContexts";
 
 function Login() {
-  const { userLoggedIn } = useAuth() || false;
+  const { userLoggedIn } = useAuth();
 
   // console.log(useAuth);
   const [email, setEmail] = useState("");
