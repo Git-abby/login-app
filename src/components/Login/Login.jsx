@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import {
   doSignInWithEmailAndPassword,
-  doSignInWithGoogle,
+  // doSignInWithGoogle,
+  doSignOut,
 } from "../../firebase/auth";
 import { useAuth } from "../../contexts/authContexts";
+import GoogleSignIn from "../GoogleAuth/GoogleSignIn";
+// import { signOut } from "firebase/auth";
 
 function Login() {
-  const { userLoggedIn } = useAuth();
+  const { userLoggedIn, currentUser } = useAuth();
 
   // console.log(useAuth);
   const [email, setEmail] = useState("");
@@ -17,7 +20,10 @@ function Login() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const navigate = useNavigate();
   console.info(email, password);
+
+  // console.log(currentUser.email);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +31,7 @@ function Login() {
       setIsSigningIn(true);
       try {
         await doSignInWithEmailAndPassword(email, password);
+        navigate('/profile');
       } catch (error) {
         console.log(error.message)
         setErrorMessage(error.message);
@@ -32,21 +39,32 @@ function Login() {
       }
       // await doSignInWithEmailAndPassword(email, password);
     }
+
   };
-  const onGoogleSUbmit = (e) => {
-    e.preventDefault();
-    if (!isSigningIn) {
-      setIsSigningIn(true);
-      doSignInWithGoogle().catch((err) => {
-        setIsSigningIn(false);
-      });
-    }
-  };
+  // const onGoogleSUbmit = (e) => {
+  //   e.preventDefault();
+  //   if (!isSigningIn) {
+  //     setIsSigningIn(true);
+  //     doSignInWithGoogle().catch((err) => {
+  //       setIsSigningIn(false);
+  //     });
+  //   }
+  // };
+
+  const onSignOut = async () => {
+    try{
+      await doSignOut();
+      navigate('/');
+      } catch(error){
+        console.error(error);
+      }
+
+  }
   return (
     <>
-      {userLoggedIn && (
+      {currentUser && userLoggedIn && (
         <div>
-          <h1>Welcome, User!</h1>
+          <h1>Welcome, {currentUser ? currentUser.email : ""} </h1>
           <p>You are now logged in.</p>
         </div>
       )}
@@ -88,13 +106,17 @@ function Login() {
             className="bg-blue-600 text-white w-full py-2 rounded-lg hover:bg-blue-500 transition duration-300">
             Login
           </button>
+
+          <GoogleSignIn />
         </form>
         <p className="mt-4">
           <Link to="/register" className="text-blue-600 hover:underline">
             Don't have an account? Register
           </Link>
         </p>
+
       </div>
+        <button type="button" onClick={onSignOut}>SIGN OUT</button>
     </>
   );
 }
