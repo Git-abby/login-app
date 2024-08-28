@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "./googleSignInStyle.css";
-
+import { doSignInWithGoogle } from "../../firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function GoogleSignIn() {
+  const [isSigningIn, setIsSigningIn] = useState(false);
+const navigate = useNavigate();
+
+  const onGoogleSUbmit = (e) => {
+    e.preventDefault();
+    if (!isSigningIn) {
+      setIsSigningIn(true);
+      try {
+        doSignInWithGoogle();
+        navigate('/profile');
+      } catch (error) {
+        console.error(error.message);
+        setIsSigningIn(false);
+      }
+    }
+  };
   return (
     <div>
       <p> OR </p>
-      <button type="button" className="google-button">
+      <button type="button" className="google-button" onClick={onGoogleSUbmit}>
         <span className="google-button__icon">
           <svg viewBox="0 0 366 372" xmlns="http://www.w3.org/2000/svg">
             <path
