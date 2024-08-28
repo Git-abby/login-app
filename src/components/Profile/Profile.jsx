@@ -23,6 +23,7 @@ function Profile() {
         <>
           <h1>Welcome </h1>
           <div>
+            <img src={currentUser.photoURL} alt="user" />
             <h3>{currentUser.email}</h3>
           </div>
           <button type="button" onClick={onSignout}>Logout</button>
