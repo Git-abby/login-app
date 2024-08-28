@@ -49,57 +49,50 @@ function Login() {
       console.error(error);
     }
   };
+  // bg - white / 10;
+  // shadow - lg;
+  // backdrop - blur - none;
+  // border;
+  // border - white / 20;
+  // rounded - lg;
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-r from-slate-700 to-slate-900 flex flex-col items-center justify-center">
+      <div className="border  min-h-screen flex flex-col items-center justify-center gap-6 bg-gradient-to-r from-slate-700 to-slate-900 px-4">
         {errorMessage && (
-          <div className="mb-4 text-red-600 text-sm">{errorMessage}</div>
+          <div className="absolute top-3 mb-4 text-sm text-red-600">
+            {errorMessage}
+          </div>
         )}
-        <h2 className="text-2xl font-bold text-gray-700 mb-6">Login</h2>
-        <form className="bg-white p-6 rounded shadow-md w-full max-w-sm">
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 font-bold mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-bold mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+        <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-blue-600 leading-loose">
+          Login
+        </h2>
+        <form className="w-full max-w-md bg-white/5 backdrop-blur-lg border border-white/20 rounded-lg shadow-lg p-8 space-y-6">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <button
             type="button"
             onClick={onSubmit}
-            className="bg-blue-600 text-white w-full py-2 rounded-lg hover:bg-blue-500 transition duration-300">
+            className="w-full py-2 text-white bg-gradient-to-r from-blue-300 via-blue-600 to-blue-700 rounded-lg transform transition-transform duration-300 hover:from-slate-900 hover:to-slate-500  ">
             Login
           </button>
 
           <GoogleSignIn />
+          <p className="mt-4 text-white text-lg ">
+            <Link to="/register" className="text-blue-300 hover:underline">
+              Don't have an account? Register
+            </Link>
+          </p>
         </form>
-        <p className="mt-4">
-          <Link to="/register" className="text-blue-600 hover:underline">
-            Don't have an account? Register
-          </Link>
-        </p>
-      <button type="button" onClick={onSignOut}>
-        SIGN OUT
-      </button>
       </div>
     </>
   );
