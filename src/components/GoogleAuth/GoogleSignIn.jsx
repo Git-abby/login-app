@@ -1,29 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import "./googleSignInStyle.css";
-import { doSignInWithGoogle } from "../../firebase/auth";
-import { useNavigate } from "react-router-dom";
+// import { doSignInWithGoogle } from "../../firebase/auth";
+// import { useNavigate } from "react-router-dom";
+// import { setDoc } from "firebase/firestore";
+// import { db } from "../../firebase/firebase";
 
-function GoogleSignIn() {
-  const [isSigningIn, setIsSigningIn] = useState(false);
-const navigate = useNavigate();
+function GoogleSignIn({onGoogleSubmit}) {
+//   const [isSigningIn, setIsSigningIn] = useState(false);
+// const navigate = useNavigate();
 
-  const onGoogleSUbmit = (e) => {
-    e.preventDefault();
-    if (!isSigningIn) {
-      setIsSigningIn(true);
-      try {
-        doSignInWithGoogle();
-        navigate('/profile');
-      } catch (error) {
-        console.error(error.message);
-        setIsSigningIn(false);
-      }
-    }
-  };
+//   const onGoogleSUbmit = (e) => {
+//     e.preventDefault();
+//     if (!isSigningIn) {
+//       setIsSigningIn(true);
+//       try {
+//         doSignInWithGoogle();
+//         // console.log(doSignInWithGoogle());
+//         navigate('/profile');
+//       } catch (error) {
+//         console.error(error.message);
+//         setIsSigningIn(false);
+//       }
+//     }
+//   };
   return (
       <div className=" flex flex-col items-stretch justify-center gap-y-3">
       <p className="text-xl text-white"> OR </p>
-      <button type="button" className="google-button" onClick={onGoogleSUbmit}>
+      <button type="button" className="google-button" onClick={onGoogleSubmit}>
         <span className="google-button__icon">
           <svg viewBox="0 0 366 372" xmlns="http://www.w3.org/2000/svg">
             <path

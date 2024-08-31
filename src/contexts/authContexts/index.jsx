@@ -2,7 +2,7 @@ import React from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase";
-
+// import { doc, getDoc } from "firebase/firestore";
 
 const AuthContext = React.createContext();
 
@@ -20,19 +20,36 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function initializeUser(user) {
-    if (user) {
-      setCurrentUser({ ...user });
+    // setCurrentUser({...user});
+    // console.log(currentUser);
+      if (user) {
+        // console.log(user.uid)
+        setCurrentUser({ ...user });
       setUserLoggedIn(true);
+
+      //Fetch USer from Firestore
+    //   const docRef = doc(db, "users", user.uid);
+    //   const docSnap = await getDoc(docRef);
+
+    //   console.log(docSnap.data());
+    //   if (docSnap.exists()) {
+    //     //state set
+    //     setUserLoggedIn(true);
+    //     console.log(docSnap.data());
+    //     setCurrentUser(docSnap.data());
+    //   } else {
+    //       console.info("User is not logged yet!");
+    //     }
     } else {
-      setCurrentUser(null);
+        setCurrentUser(null);
       setUserLoggedIn(false);
     }
     setLoading(false);
   }
-  console.log(userLoggedIn);
+//   console.log(userLoggedIn);
+
   const value = {
     currentUser,
-    // userLoggedIn,userLoggedIn
     userLoggedIn,
     loading,
   };
