@@ -3,6 +3,7 @@
 
 .google-button {
   height: 40px;
+  width: 100%;
   border-width: 0;
   background: white;
   color: #737373;

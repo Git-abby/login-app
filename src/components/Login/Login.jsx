@@ -3,15 +3,18 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
   doSignInWithEmailAndPassword,
+  doSignInWithGoogle,
   // doSignInWithGoogle,
-  doSignOut,
+  // doSignOut,
 } from "../../firebase/auth";
-import { useAuth } from "../../contexts/authContexts";
+// import { useAuth } from "../../contexts/authContexts";
 import GoogleSignIn from "../GoogleAuth/GoogleSignIn";
 // import { signOut } from "firebase/auth";
 
+// import { db } from "../../firebase/firebase";
+
 function Login() {
-  const { userLoggedIn, currentUser } = useAuth();
+  // const { userLoggedIn, currentUser } = useAuth();
 
   // console.log(useAuth);
   const [email, setEmail] = useState("");
@@ -41,14 +44,22 @@ function Login() {
     }
   };
 
-  const onSignOut = async () => {
-    try {
-      await doSignOut();
-      navigate("/");
-    } catch (error) {
-      console.error(error);
+  const googleSignIn = (e) => {
+    e.preventDefault();
+    if (!isSigningIn) {
+      setIsSigningIn(true);
+      doSignInWithGoogle();
+      navigate("/profile");
     }
   };
+  // const onSignOut = async () => {
+  //   try {
+  //     await doSignOut();
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   // bg - white / 10;
   // shadow - lg;
   // backdrop - blur - none;
@@ -85,8 +96,10 @@ function Login() {
             className="w-full py-2 text-white bg-gradient-to-r from-blue-300 via-blue-600 to-blue-700 rounded-lg transform transition-transform duration-300 hover:from-slate-900 hover:to-slate-500  ">
             Login
           </button>
+          
+            <GoogleSignIn onGoogleSubmit={googleSignIn} />
+          
 
-          <GoogleSignIn />
           <p className="mt-4 text-white text-lg ">
             <Link to="/register" className="text-blue-300 hover:underline">
               Don't have an account? Register
