@@ -3,16 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
-import { useAuth } from "../../contexts/authContexts";
 
 function Register() {
-  // const { currentUser } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  // console.log(name, email, password)
 
   const navigate = useNavigate();
   const onSubmit = async (e) => {
@@ -29,30 +26,29 @@ function Register() {
           name,
           email,
         };
-        
+
         console.log("UID:>>", uid);
         await saveUserToFirestore(uid, photoURL, userData);
-        const userRef = doc(db, "users", uid);
+        // const userRef = doc(db, "users", uid);
 
         navigate("/profile", { state: { uid } });
       } catch (error) {
         console.log(error.message);
         setErrorMessage(error.message);
       }
-      // console.log(res);
     }
   };
 
   const saveUserToFirestore = async (uid, photoURL, userdata) => {
     try {
-      const docRef = await setDoc(doc(db, "users", uid), {
+      await setDoc(doc(db, "users", uid), {
         displayName: userdata.name,
         email: userdata.email,
         photoUrl: photoURL,
       });
-      const userRef = doc(db, "users", uid);
+      // const userRef = doc(db, "users", uid);
 
-      console.info("Doc Ref", userRef);
+      // console.info("Doc Ref", userRef);
     } catch (error) {
       console.error(error.message);
     }
