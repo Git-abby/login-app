@@ -9,14 +9,8 @@ import {
 } from "../../firebase/auth";
 // import { useAuth } from "../../contexts/authContexts";
 import GoogleSignIn from "../GoogleAuth/GoogleSignIn";
-// import { signOut } from "firebase/auth";
-
-// import { db } from "../../firebase/firebase";
 
 function Login() {
-  // const { userLoggedIn, currentUser } = useAuth();
-
-  // console.log(useAuth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,48 +18,34 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
-  console.info(email, password);
-
-  // console.log(currentUser.email);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!isSigningIn) {
       setIsSigningIn(true);
       try {
-        await doSignInWithEmailAndPassword(email, password);
-        navigate("/profile");
+        const result = await doSignInWithEmailAndPassword(email, password);
+        console.log(result.user.uid);
+        const uid = result.user.uid;
+        navigate("/profile", { state: { uid } });
       } catch (error) {
         console.log(error.message);
         setErrorMessage(error.message);
         setIsSigningIn(false);
       }
-      // await doSignInWithEmailAndPassword(email, password);
     }
   };
 
-  const googleSignIn = (e) => {
+  const googleSignIn = async (e) => {
     e.preventDefault();
     if (!isSigningIn) {
       setIsSigningIn(true);
-      doSignInWithGoogle();
-      navigate("/profile");
+      const result = await doSignInWithGoogle();
+      const uid = result.user.uid;
+      navigate("/profile", { state: { uid } });
     }
   };
-  // const onSignOut = async () => {
-  //   try {
-  //     await doSignOut();
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // bg - white / 10;
-  // shadow - lg;
-  // backdrop - blur - none;
-  // border;
-  // border - white / 20;
-  // rounded - lg;
+
   return (
     <>
       <div className="border  min-h-screen flex flex-col items-center justify-center gap-6 bg-gradient-to-r from-slate-700 to-slate-900 px-4">
@@ -96,9 +76,8 @@ function Login() {
             className="w-full py-2 text-white bg-gradient-to-r from-blue-300 via-blue-600 to-blue-700 rounded-lg transform transition-transform duration-300 hover:from-slate-900 hover:to-slate-500  ">
             Login
           </button>
-          
-            <GoogleSignIn onGoogleSubmit={googleSignIn} />
-          
+
+          <GoogleSignIn onGoogleSubmit={googleSignIn} />
 
           <p className="mt-4 text-white text-lg ">
             <Link to="/register" className="text-blue-300 hover:underline">
