@@ -13,7 +13,7 @@ function App() {
 
   const [userInfo, setUserInfo] = useState(null);
   const [isSigningIn, setIsSigningIn] = useState(false);
-  // const navigate = useNavigate();
+ 
   
   
   const onGoogleSubmit = async (e) => {
@@ -25,7 +25,6 @@ function App() {
         const result = await doSignInWithGoogle();
         console.log(result);
         setUserInfo(result.user);
-        // navigate('/profile');
         console.info("userInfo :>>", userInfo);
       } catch (error) {
         console.error(error.message);

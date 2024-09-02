@@ -4,10 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   doSignInWithEmailAndPassword,
   doSignInWithGoogle,
-  // doSignInWithGoogle,
-  // doSignOut,
 } from "../../firebase/auth";
-// import { useAuth } from "../../contexts/authContexts";
 import GoogleSignIn from "../GoogleAuth/GoogleSignIn";
 
 function Login() {
@@ -25,7 +22,6 @@ function Login() {
       setIsSigningIn(true);
       try {
         const result = await doSignInWithEmailAndPassword(email, password);
-        console.log(result.user.uid);
         const uid = result.user.uid;
         navigate("/profile", { state: { uid } });
       } catch (error) {
