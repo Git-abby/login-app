@@ -38,7 +38,7 @@ function Login() {
       setIsSigningIn(true);
       const result = await doSignInWithGoogle();
       const uid = result.user.uid;
-      navigate("/profile", { state: { uid } });
+      navigate('/profile?success=true', { state: { uid } });
     }
   };
 
