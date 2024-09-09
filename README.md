@@ -63,7 +63,6 @@ You need to configure Firebase for authentication and Firestore in your project.
 3. Add Firebase Authentication (enable Email/Password and Google sign-in methods).
 4. Create a Firestore database (choose "Start in Test mode" for ease of development).
 5. Create a new web app in Firebase and get the configuration keys.
-6. Create a `.env` file in the root of your project and add your Firebase configuration as below:
 
 ```plaintext
 REACT_APP_API_KEY=your-firebase-api-key
@@ -144,8 +143,8 @@ login-app/
 │   └── styles/              # CSS styles for the app
 ├── .github/                 # GitHub Actions workflow configuration
 │   └── workflows/
+│       └── firebase-hosting-merge.yml
 │       └── firebase-hosting-pull-request.yml
-├── .env                     # Environment variables for Firebase
 ├── .gitignore               # Files and folders to be ignored by Git
 ├── package.json             # Dependencies and scripts
 ├── README.md                # Project documentation
@@ -165,10 +164,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for best performance.
-
-### `npm run lint`
-
-Lints the project using ESLint and fixes any linting issues automatically.
 
 ## Firestore Security Rules
 
